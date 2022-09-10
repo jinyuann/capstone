@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JCL Automation</title>
+    <style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 75%;
+}
+th {background-color: #dddddd;
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;}
+
+td {border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;}
+
+.Failed {color:red;
+            font-size:22px;
+            font-weight: bold;}
+.Success {color:Green;
+            font-size:22px;
+            font-weight: bold;}
+    </style>
+
+</head>
+<body>
+   <center><h1>JCL Automation</h1>
+    <form action = "/Converter" method = "POST" enctype = "multipart/form-data">
+        <label>1) Select SDS parameters file:</label>
+         <input type = "file" name = "file" />
+
+
+
+       <br> <br>
+
+
+           <label>2) Select Cobol JCL file:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <input type = "file" name = "file2" />
+       <br>
+
+        <p>3) Please Select Your Environment Below:</p>
+
+        <input type="radio" id="ob1_dev" name="environment" value="OB1_DEV" checked>
+        <label for="ob1_dev">OB1_DEV</label>
+           <input type="radio" id="ob2_dev" name="environment" value="OB2_DEV">
+        <label for="ob1_dev">OB2_DEV</label>
+           <br>
+        <input type="radio" id="ob1_uat" name="environment" value="OB1_UAT">
+        <label for="ob1_uat">OB1_UAT</label>
+            <input type="radio" id="ob2_uat" name="environment" value="OB2_UAT">
+        <label for="ob1_uat">OB2_UAT</label><br>
+
+        <input type="radio" id="prod" name="environment" value="PROD">
+           <label for="prod">PROD</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+           <br>
+
+            <p>4) Summary File spooling to TSO:</p>
+
+        <input type="radio" id="yes" name="spooling" value="yes">
+        <label for="yes">Yes</label>
+           <input type="radio" id="no" name="spooling" value="no" checked>
+        <label for="no">No</label>
+           <br>           <br>
+
+  <input type="submit" value="Submit">
+</form>
+
+       <br>
+    {% if SDSinsertion == True %}
+        <label class ='Failed'>Please insert SDS file</label>
+         {% endif %}
+       {% if CobolJCLinsertion == True %}
+        <label class ='Failed'>Please insert Cobol JCL file (You have to also re-insert the SDS file again)</label>
+         {% endif %}
+        {% if Error == True %}
+        <label class ='Failed'>Please try again and ensure you have insert the correct file type</label>
+         {% endif %}
+       {% if success == True %}
+        <label class ='Success'>Successful</label><br>
+       <a href="{{url_for('downloads', id=JCLname)}}" >Click here to download {{ JCLname }}</a>
+         {% endif %}
+       </center>
+</body>
