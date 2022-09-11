@@ -47,6 +47,12 @@ def login():
 def CobolJCL():
     try:
        if request.method == 'POST':
+           tsoname = request.form['name']
+           if tsoname:
+               tsoname = tsoname.upper() + '.'
+           else:
+               tsoname =''
+           print(tsoname)
            data.clear()
            file2 = request.files['file']
            if not file2:
@@ -139,7 +145,15 @@ def CobolJCL():
                        for i in range (spacecount):
                            spaces = spaces +" "
                        parameterspace = data[row_data][1] + spaces
-                       NewJCLFile.write("'" +parameterspace + ' >' + data[row_data][2] + "'" + '\n')
+                       if "DSN" in parameterspace:
+                           if "DSNOUTL" in parameterspace:
+                               NewJCLFile.write("'" + parameterspace + ' >' + data[row_data][2] + "'" + '\n')
+                           elif "DSNINL" in parameterspace:
+                               NewJCLFile.write("'" + parameterspace + ' >' + data[row_data][2] + "'" + '\n')
+                           else:
+                               NewJCLFile.write("'" + parameterspace + ' >' + tsoname + data[row_data][2] + "'" + '\n')
+                       else:
+                        NewJCLFile.write("'" +parameterspace + ' >' +data[row_data][2] + "'" + '\n')
                        if "SUMMARY.SD" in data[row_data][2]:
                            summaryfile = data[row_data][2]
                    NewJCLFile.write("/*" + '\n')
@@ -153,7 +167,7 @@ def CobolJCL():
                        NewJCLFile.write("//SYSIN DD DUMMY" + '\n')
                        NewJCLFile.write("//SYSPRINT DD SYSOUT=X" + '\n')
                        NewJCLFile.write("//SYSOUT DD SYSOUT=*" + '\n')
-                       NewJCLFile.write("//SYSUT1 DD DISP=SHR,DSN=" + summaryfile + '\n')
+                       NewJCLFile.write("//SYSUT1 DD DISP=SHR,DSN=" + tsoname+summaryfile + '\n')
                        NewJCLFile.write("//SYSUT2 DD SYSOUT=*" + '\n')
                        NewJCLFile.write("//*" + '\n')
                        NewJCLFile.write("//******************************************************************" + '\n')

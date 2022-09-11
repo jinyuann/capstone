@@ -13,7 +13,7 @@ services:
     volumes:
       - "./web:/web"
     ports:
-      - "5000:5000"
+      - "80:5000"
     expose:
       - "5000"
     mem_limit: 256m

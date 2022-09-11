@@ -28,36 +28,17 @@ td {border: 1px solid #dddddd;
 
 border-bottom:solid;
 }
-.split {
-  height: 100%;
-  width: 50%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-
-.left {
-  left: 0;
-  background-color: #F0F0F0;
-  border-right:solid;
-}
-
-.right {
-  right: 0;
-  background-color: #F0F0F0;
-}
 .align {
-margin-left:25px;
+margin-left:25%;
+}
+body {
+  background-color: #F0F0F0;
 }
     </style>
 
 </head>
 <body>
-<div class="split right">
    <center><h1>JCL Automation</h1>
-
     <form action = "/Converter" method = "POST" enctype = "multipart/form-data">
         <label>1) Select SDS parameters file:</label>
          <input type = "file" name = "file" />
@@ -116,12 +97,9 @@ margin-left:25px;
        <a href="{{url_for('downloads', id=JCLname)}}" >Click here to download {{ JCLname }}</a>
          {% endif %}
        </center>
-
 <br><br><br>
-</div>
-
-<div class="split left">
-   <center> <h1>Instructions</h1></center>
+<p class="break"></p>
+   <center> <h2>Instructions</h2></center>
    <section class="align">
 
        <p>Step 1: Create a word document(This will be your SDS parameters file) and only paste the parameters table from your original SDS file.</p>
@@ -132,5 +110,4 @@ margin-left:25px;
         <p>Step 4: Click the options and press submit and a new file will be generated.</p>
 
 </section>
-    </div>
 </body>
